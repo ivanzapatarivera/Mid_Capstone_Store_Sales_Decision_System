@@ -42,8 +42,4 @@ class SalesTeamLeads(db.Model):
         return f"Employee name: {name} \nEmployee Number: {final_emp_no} \nSales Region: {region} \nPay Grade: {paygrade}"
 
 
-sql_line: 'SELECT * FROM sales_team_leads'
-engine = create_engine(db_uri)
-# session
-
 db.create_all()
