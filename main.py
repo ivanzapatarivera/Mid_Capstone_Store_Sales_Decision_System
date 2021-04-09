@@ -4,6 +4,7 @@ from flask import Flask, redirect, render_template, url_for
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
+from sqlalchemy.dialects.mysql import *
 
 
 # Creating app variable and configurations
@@ -26,10 +27,10 @@ class SalesTeamLeads(db.Model):
 
     __tablename__ = 'sales_team_leads'
 
-    name = db.Column(db.Text, nullable = False)
-    paygrade = db.Column(db.VARCHAR(3), nullable = False)
-    region = db.Column(db.VARCHAR(2), nullable = False)
-    final_emp_no = db.Column(db.VARCHAR(6), nullable = False)
+    name = db.Column(Text, nullable = False)
+    paygrade = db.Column(VARCHAR(3), nullable = False)
+    region = db.Column(VARCHAR(2), nullable = False)
+    final_emp_no = db.Column(VARCHAR(6), nullable = False, primary_key = True)
 
     def __init__(self, name, paygrade, region, final_emp_no):
         self.name = name
@@ -39,3 +40,10 @@ class SalesTeamLeads(db.Model):
 
     def __repr__(self):
         return f"Employee name: {name} \nEmployee Number: {final_emp_no} \nSales Region: {region} \nPay Grade: {paygrade}"
+
+
+sql_line: 'SELECT * FROM sales_team_leads'
+engine = create_engine(db_uri)
+# session
+
+db.create_all()
