@@ -21,4 +21,21 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 Migrate(app, db)
 
-print(db)
+
+class SalesTeamLeads(db.Model):
+
+    __tablename__ = 'sales_team_leads'
+
+    name = db.Column(db.Text, nullable = False)
+    paygrade = db.Column(db.VARCHAR(3), nullable = False)
+    region = db.Column(db.VARCHAR(2), nullable = False)
+    final_emp_no = db.Column(db.VARCHAR(6), nullable = False)
+
+    def __init__(self, name, paygrade, region, final_emp_no):
+        self.name = name
+        self.paygrade = paygrade
+        self.region = region
+        self.final_emp_no = final_emp_no
+
+    def __repr__(self):
+        return f"Employee name: {name} \nEmployee Number: {final_emp_no} \nSales Region: {region} \nPay Grade: {paygrade}"
