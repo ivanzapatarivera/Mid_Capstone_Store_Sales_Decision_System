@@ -63,18 +63,52 @@ class ItemsOffered(db.Model):
         return f'{self.item_code} \n {self.item_name} \n {self.url} \n {self.link} \n {self.manufacturer}'
 
 
+class SalesPeriods(db.Model):
+
+    __tablename__ = 'sales_periods'
+
+    date = Column(DATE, nullable=False)
+    attribute = Column(VARCHAR(3), nullable=False, primary_key=True)
+    sales_period = Column(TINYINT(2), nullable=False)
+    sales_year = Column(SMALLINT(4), nullable=False, primary_key=True)
+    quarter = Column(TINYINT(1), nullable = False)
+
+    __table_args__ = (
+        PrimaryKeyConstraint('attribute', 'sales_year'),
+        {},
+    )
+
+
+    def __init__(self, date, attribute, sales_period, sales_year):
+        self.date = date
+        self.attribute = attribute
+        self.sales_period = sales_period
+        self.sales_year = sales_year
+
+    def __repr__(self):
+        return f'{self.date} {self.attribute} {self.sales_period} {self.sales_year}'
+
+
 class ProductSales(db.Model):
 
     __tablename__ = 'product_sales'
 
+    sale_id = Column(INTEGER(display_width=10), nullable=False, primary_key=True)
     index = Column(INTEGER(display_width=10), nullable=False)
     item_code = Column(VARCHAR(10), ForeignKey(
-        ItemsOffered.item_code, onupdate='CASCADE'), nullable=False)
+        ItemsOffered.item_code), nullable=False)
     emp_id = Column(VARCHAR(6), ForeignKey(
-        Employees.emp_id, onupdate='CASCADE'), nullable=False)
-    attribute = Column(VARCHAR(2), nullable=False, primary_key=True)
-    year = Column(SMALLINT(4), nullable=False, primary_key=True)
+        Employees.emp_id), nullable=False)
+    attribute = Column(VARCHAR(6), nullable=False)
+    year = Column(SMALLINT(4), nullable=False)
     value = Column(INTEGER(display_width=10), nullable=False)
+
+    __table_args__ = (
+        ForeignKeyConstraint(
+            [attribute, year],
+            [SalesPeriods.attribute, SalesPeriods.sales_year],
+        ),
+    )
 
     def __init__(self, index, item_code, emp_id, attribute, year, value):
         self.index = index
@@ -86,32 +120,6 @@ class ProductSales(db.Model):
 
     def __repr__(self):
         return f"{self.index} \n{self.item_code} \n{self.emp_id} \n{self.attribute} \n {self.year} \n{self.value}"
-
-
-class SalesPeriods(db.Model):
-
-    __tablename__ = 'sales_periods'
-
-    date = Column(DATE, nullable=False, primary_key=True)
-    attribute = Column(VARCHAR(3), nullable=False)
-    sales_period = Column(TINYINT(2), nullable=False)
-    sales_year = Column(SMALLINT(4), nullable=False)
-
-    __table_args__ = (
-        ForeignKeyConstraint(
-            [attribute, sales_year],
-            [ProductSales.attribute, ProductSales.year],
-        ),
-    )
-
-    def __init__(self, date, attribute, sales_period, sales_year):
-        self.date = date
-        self.attribute = attribute
-        self.sales_period = sales_period
-        self.sales_year = sales_year
-
-    def __repr__(self):
-        return f'{self.date} {self.attribute} {self.sales_period} {self.sales_year}'
 
 
 class ProductPriceChange(db.Model):

@@ -1,0 +1,1 @@
+['date', 'attribute', 'sales_period', 'sales_year']
