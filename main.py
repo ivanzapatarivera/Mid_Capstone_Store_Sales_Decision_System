@@ -23,23 +23,13 @@ db = SQLAlchemy(app)
 Migrate(app, db)
 
 
-class SalesTeamLeads(db.Model):
+class ProductSales(db.Model):
 
-    __tablename__ = 'sales_team_leads'
+    __tablename__ = 'product_sales'
 
-    name = db.Column(Text, nullable = False)
-    paygrade = db.Column(VARCHAR(3), nullable = False)
-    region = db.Column(VARCHAR(2), nullable = False)
-    final_emp_no = db.Column(VARCHAR(6), nullable = False, primary_key = True)
-
-    def __init__(self, name, paygrade, region, final_emp_no):
-        self.name = name
-        self.paygrade = paygrade
-        self.region = region
-        self.final_emp_no = final_emp_no
-
-    def __repr__(self):
-        return f"Employee name: {name} \nEmployee Number: {final_emp_no} \nSales Region: {region} \nPay Grade: {paygrade}"
+    sale_id = Column(Integer(display_width = 10), nullable = False)
+    index = Column(Integer(display_width = 10), nullable = False)
+    item_code = 
 
 
 db.create_all()
