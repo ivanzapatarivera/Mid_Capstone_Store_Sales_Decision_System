@@ -36,7 +36,7 @@ body {
     /* box-shadow: 0 0 10px rgb(200,200,200); */
 }
 
-.input {
+.input, .INPUT {
     border-radius: 25px;
     border: 1px;
     border-style: dotted;

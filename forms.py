@@ -34,3 +34,13 @@ class AddWarranty(FlaskForm):
     manufacturer = StringField('Manufacturer (optional): ')
     price = IntegerField('Price: ')
     submit = SubmitField('Add')
+
+
+# Class to create Price Change form
+class PriceChange(FlaskForm):
+
+    item_code = StringField('Item Code: ')
+    attribute = StringField('Year Quarter (yyyyq#): ')
+    value = IntegerField('New Price: ')
+    submit = SubmitField('Add')
+

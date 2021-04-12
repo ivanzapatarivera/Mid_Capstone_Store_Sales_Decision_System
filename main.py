@@ -143,14 +143,13 @@ class ProductPriceChange(db.Model):
     attribute = Column(VARCHAR(6), nullable=False)
     value = Column(INTEGER(display_width=10), nullable=False)
 
-    def __init__(self, price_id, item_code, attribute, value):
-        self.price_id = price_id
+    def __init__(self, item_code, attribute, value):
         self.item_code = item_code
         self.attribute = attribute
         self.value = value
 
     def __repr__(self):
-        return f'{self.price_id} {self.item_code} {self.attribute} {self.value}'
+        return f'{self.item_code} {self.attribute} {self.value}'
 
 
 # Validating if sql string will throw a try/except error
@@ -251,6 +250,30 @@ def add_warr():
         return redirect(url_for('index'))
 
     return render_template('add_warr.html', form = form)
+
+
+# Route to render product price change form
+@app.route('/price_change', methods = ['GET', 'POST'])
+def price_change():
+
+    form = PriceChange()
+
+    if form.validate_on_submit():
+
+        item_code = form.item_code.data
+        attribute = form.attribute.data
+        value = form.value.data
+
+        price_change = ProductPriceChange(item_code, attribute, value)
+        db.session.add(price_change)
+        db.session.commit()
+
+        return redirect(url_for('index'))
+
+    item_code_list = ItemsOffered.query.all()
+    return render_template('price_change.html', form = form, items = item_code_list)
+
+
 
 if __name__ == "__main__":
     app.run(debug = True)
