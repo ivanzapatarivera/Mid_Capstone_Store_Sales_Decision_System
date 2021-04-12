@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <!-- 
+            
+            <p class="text-center">(Puppies Analytics Warehousing System)</p> -->
+            <div class="col-12 col-sm-6">
+                <img src="{{url_for('static', filename='home.png')}}" class="home_image">
+            </div>
+            <div class="col-12 col-sm-6 d-flex flex-column align-items-center justify-content-center">
+                <h3>Welcome to</h3>
+                <h1 class="paws text-center">Store Sales Decision System</h1>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}
