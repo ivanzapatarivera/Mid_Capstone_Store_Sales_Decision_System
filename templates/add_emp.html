@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row mb-5">
+        <div class="col-12 col-md-8 mx-auto">
+            <div class="text-center">
+                <img src="{{url_for('static', filename='pup.jpg')}}"
+                    style="max-width: 250px; height: auto; border-radius: 25px; box-shadow: 0 0 10px rgb(200,200,200);">
+            </div>
+            <h1 class="my-2 text-center paws_other">Store Sales Decision System</h1>
+            <h4 class="text-center">Add Employee</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8 mx-auto">
+            <form method="POST">
+                <div class="row">
+                    <div class="col-4" style="font-family: 'Sawarabi Mincho', sans-serif;">
+                        {{form.hidden_tag()}}
+                    </div>
+                    <div class="col-8">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4" style="font-family: 'Sawarabi Mincho', sans-serif;">
+                        {{form.emp_name.label}}
+                    </div>
+                    <div class="col-8">
+                        {{form.emp_name(class="col-12 input")}}
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-4" style="font-family: 'Sawarabi Mincho', sans-serif;">
+                        {{form.pay_grade.label}}
+                    </div>
+                    <div class="col-7 col-sm-8">
+                        <SELECT name="pay_grade" class="col-12 input">
+                            {% for grade in pay_grade_list | sort(attribute = "pay_grade") %}
+                            <OPTION value={{ grade.pay_grade }}>{{grade.pay_grade.upper()}}</OPTION>
+                            {% endfor %}
+                        </SELECT>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="font-family: 'Sawarabi Mincho', sans-serif;">
+                        {{form.region.label}}
+                    </div>
+                    <div class="col-8">
+                        <SELECT name="region" class="col-12 input">
+                            {% for r in region_list | sort(attribute = "region") %}
+                            <OPTION value={{ r }}>{{r}}</OPTION>
+                            {% endfor %}
+                        </SELECT>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="font-family: 'Sawarabi Mincho', sans-serif;">
+                        {{form.emp_id.label}}
+                    </div>
+                    <div class="col-8">
+                        {{form.emp_id(class="col-12 input")}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        {{form.submit(class="mt-4 col-3 btn btn-primary")}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

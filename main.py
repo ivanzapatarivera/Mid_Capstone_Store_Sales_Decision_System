@@ -8,11 +8,19 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from sqlalchemy.dialects.mysql import *
 
+# Importing forms
+from forms import AddEmployee
 
 # Creating app variable and configurations
 app = Flask(__name__)
-app.config['SECRET KEY'] = 'mysecretkey'
 
+app.config['SECRET_KEY'] = 'mysecretkey'
+
+### MySQL DATABASE SECTION ###
+import config
+
+# Importing environmental variables using config.py
+from config import username, password, server, database, db_uri
 
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -171,6 +179,50 @@ db.create_all()
 def index():
     return render_template('home.html')
 
+
+@app.route('/add_emp', methods = ['GET', 'POST'])
+def add_emp():
+
+    form = AddEmployee()
+
+    if form.validate_on_submit():
+
+        emp_name = form.emp_name.data
+        pay_grade = form.pay_grade.data
+        region = form.region.data
+        emp_id = form.emp_id.data
+
+        added_employee = Employees(emp_name, pay_grade, region, emp_id)
+        db.session.add(added_employee)
+        db.session.commit()
+
+        return redirect(url_for('index'))
+
+    pay_grade_list = Employees.query.all()
+    region_list = ['NW', 'SW']
+    return render_template('add_emp.html', form = form, pay_grade_list = pay_grade_list, region_list = region_list)
+
+
+@app.route('/add_item', methods = ['GET', 'POST'])
+def add_product():
+
+    form = AddProduct()
+
+    if form.validate_on_submit():
+
+        item_code = form.item_code.data
+        item_name = form.item_name.data
+        url = form.url.data
+        link = form.link.data
+        manufacturer = form.manufacturer.data        
+
+        added_product = ItemsOffered(item_code, item_name, url, link, manufacturer)
+        db.session.add(added_product)
+        db.session.commit()
+
+        return redirect(url_for('index'))
+
+    return render_template('add_product.html', form = form)
 
 if __name__ == "__main__":
     app.run(debug = True)
