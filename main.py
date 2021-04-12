@@ -143,4 +143,20 @@ class ProductPriceChange(db.Model):
         return f'{self.price_id} {self.item_code} {self.attribute} {self.value}'
 
 
+# Validating if sql string will throw a try/except error
+# If it throws an error, .create_all() method will execute
+sql = 'SELECT * FROM employees; SELECT * FROM items_offered; SELECT * FROM product_price_change; SELECT * FROM product_sales; SELECT * FROM sales_periods;'
+engine = create_engine(db_uri)
+session = db.session()
+
+try: 
+    cursor = session.execute(sql).cursor
+    if(cursor):
+        print('CONNECTED')
+       
+except:
+    print(f'Table does not exist and string {sql} was not executed.')
+    print(f'*** CREATING TABLE ***')
+    db.create_all()
+    print(f'*** TABLE CREATED ***')
 db.create_all()
