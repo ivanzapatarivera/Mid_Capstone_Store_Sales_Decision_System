@@ -20,5 +20,5 @@ class AddProduct(FlaskForm):
     url = StringField('URL (optional): ')
     link = StringField('Name for Link (optional): ')
     manufacturer = StringField('Manufacturer (optional): ')
-
+    submit = SubmitField('Add')
 

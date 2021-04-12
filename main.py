@@ -9,7 +9,7 @@ from sqlalchemy import *
 from sqlalchemy.dialects.mysql import *
 
 # Importing forms
-from forms import AddEmployee
+from forms import AddEmployee, AddProduct
 
 # Creating app variable and configurations
 app = Flask(__name__)
@@ -179,7 +179,7 @@ db.create_all()
 def index():
     return render_template('home.html')
 
-
+# Route to rendder add employee form
 @app.route('/add_emp', methods = ['GET', 'POST'])
 def add_emp():
 
@@ -203,8 +203,9 @@ def add_emp():
     return render_template('add_emp.html', form = form, pay_grade_list = pay_grade_list, region_list = region_list)
 
 
-@app.route('/add_item', methods = ['GET', 'POST'])
-def add_product():
+# Route to render add product form
+@app.route('/add_prod', methods = ['GET', 'POST'])
+def add_prod():
 
     form = AddProduct()
 
@@ -222,7 +223,7 @@ def add_product():
 
         return redirect(url_for('index'))
 
-    return render_template('add_product.html', form = form)
+    return render_template('add_prod.html', form = form)
 
 if __name__ == "__main__":
     app.run(debug = True)
