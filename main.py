@@ -96,17 +96,18 @@ class ProductSales(db.Model):
     sale_id = Column(INTEGER(display_width=10), nullable=False, primary_key=True)
     index = Column(INTEGER(display_width=10), nullable=False)
     item_code = Column(VARCHAR(10), ForeignKey(
-        ItemsOffered.item_code), nullable=False)
+        ItemsOffered.item_code, onupdate='CASCADE'))
     emp_id = Column(VARCHAR(6), ForeignKey(
-        Employees.emp_id), nullable=False)
-    attribute = Column(VARCHAR(6), nullable=False)
-    year = Column(SMALLINT(4), nullable=False)
+        Employees.emp_id, onupdate='CASCADE'))
+    attribute = Column(VARCHAR(6))
+    year = Column(SMALLINT(4))
     value = Column(INTEGER(display_width=10), nullable=False)
 
     __table_args__ = (
         ForeignKeyConstraint(
             [attribute, year],
             [SalesPeriods.attribute, SalesPeriods.sales_year],
+            onupdate="CASCADE", ondelete='Set Null'
         ),
     )
 
