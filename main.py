@@ -103,7 +103,7 @@ class ProductSales(db.Model):
 
     __tablename__ = 'product_sales'
 
-    sale_id = Column(INTEGER(display_width=10), nullable=False, primary_key=True)
+    sale_id = Column(INTEGER(display_width=10), nullable=False, primary_key=True, autoincrement=True)
     index = Column(INTEGER(display_width=10), nullable=False)
     item_code = Column(VARCHAR(10), ForeignKey(
         ItemsOffered.item_code, onupdate='CASCADE'))
@@ -192,8 +192,8 @@ def add_emp():
         pay_grade = form.pay_grade.data
         region = form.region.data
         emp_id = form.emp_id.data
-
         added_employee = Employees(emp_name, pay_grade, region, emp_id)
+
         db.session.add(added_employee)
         db.session.commit()
 
@@ -278,20 +278,20 @@ def price_change():
 @app.route('/sales', methods = ['GET', 'POST'])
 def sales():
 
-    form = PriceChange()
+    form = RegisterSale()
 
     if form.validate_on_submit():
 
-        sale_id = form.sale_id.data
         index = form.index.data
         item_code = form.item_code.data
         emp_id = form.emp_id.data
         attribute = form.attribute.data
         year = form.year.data
-        value = form.value.data
+        value = form.value.data  
 
-        price_change = ProductPriceChange(item_code, attribute, value)
-        db.session.add(price_change)
+        sales = ProductSales(index, item_code, emp_id, attribute, year, value)
+
+        db.session.add(sales)
         db.session.commit()
 
         return redirect(url_for('index'))
@@ -299,7 +299,7 @@ def sales():
     item_code_list = ItemsOffered.query.all()
     emp_id_list = Employees.query.all()
     attribute_year = SalesPeriods.query.all()
-    return render_template('price_change.html', form = form, items = item_code_list, emps = emp_id_list, attr = attribute_year)
+    return render_template('sales.html', form = form, items = item_code_list, emps = emp_id_list, attr = attribute_year)
 
 if __name__ == "__main__":
     app.run(debug = True)

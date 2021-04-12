@@ -46,12 +46,12 @@ class PriceChange(FlaskForm):
 
 
 # Class to create Sales form
-class Sales(FlaskForm):
+class RegisterSale(FlaskForm):
 
     index = IntegerField('Index ID: ')
     item_code = StringField('Item Code: ')
     emp_id = StringField('Employee ID: ')
     attribute = StringField('Week of Year: ')
     year = IntegerField('Year (####)')
-    value = IntegerField('Sales Value: ')
+    value = IntegerField('Sales Value: ')    
     submit = SubmitField('Add')

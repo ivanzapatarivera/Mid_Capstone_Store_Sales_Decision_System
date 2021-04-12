@@ -23,15 +23,34 @@
                     <div class="col-8">
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-4" style="font-family: 'Sawarabi Mincho', sans-serif;">
+                        {{form.index.label}}
+                    </div>
+                    <div class="col-8">
+                        {{form.index(class="col-12 input")}}
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-4" style="font-family: 'Sawarabi Mincho', sans-serif;">
                         {{form.item_code.label}}
                     </div>
                     <div class="col-8">
                         <SELECT name="item_code" class="col-12 input">
-                            {% for i in items if i.item_code[0:3] != 'ESP' %}
+                            {% for i in items %}
                             <OPTION value={{ i.item_code }}>{{i.item_code.upper()}}</OPTION>
+                            {% endfor %}
+                        </SELECT>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="font-family: 'Sawarabi Mincho', sans-serif;">
+                        {{form.emp_id.label}}
+                    </div>
+                    <div class="col-8">
+                        <SELECT name="emp_id" class="col-12 input">
+                            {% for i in emps %}
+                            <OPTION value={{ i.emp_id }}>{{i.emp_name}}</OPTION>
                             {% endfor %}
                         </SELECT>
                     </div>
@@ -41,7 +60,21 @@
                         {{form.attribute.label}}
                     </div>
                     <div class="col-8">
-                        {{form.attribute(class="col-12 input")}}
+                        <SELECT name="attribute" class="col-12 input">
+                            {% set attr_list = [] %}
+                            {% for i in attr if i.attribute not in attr_list %}
+                            <OPTION value={{ i.attribute }}>{{ i.attribute.upper() }}</OPTION>
+                            {% set attr_list = attr_list.append(i.attribute) %}
+                            {% endfor %}
+                        </SELECT>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="font-family: 'Sawarabi Mincho', sans-serif;">
+                        {{form.year.label}}
+                    </div>
+                    <div class="col-8">
+                        {{form.year(class="col-12 input")}}
                     </div>
                 </div>
                 <div class="row">
