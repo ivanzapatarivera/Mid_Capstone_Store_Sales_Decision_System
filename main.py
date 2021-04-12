@@ -261,7 +261,33 @@ def price_change():
     if form.validate_on_submit():
 
         item_code = form.item_code.data
+        attribute = form.attribute.data.upper()
+        value = form.value.data
+        price_change = ProductPriceChange(item_code, attribute, value)
+        db.session.add(price_change)
+        db.session.commit()
+
+        return redirect(url_for('index'))
+
+    
+    item_code_list = ItemsOffered.query.all()
+    return render_template('price_change.html', form = form, items = item_code_list)
+
+
+# Route to render sales form
+@app.route('/sales', methods = ['GET', 'POST'])
+def sales():
+
+    form = PriceChange()
+
+    if form.validate_on_submit():
+
+        sale_id = form.sale_id.data
+        index = form.index.data
+        item_code = form.item_code.data
+        emp_id = form.emp_id.data
         attribute = form.attribute.data
+        year = form.year.data
         value = form.value.data
 
         price_change = ProductPriceChange(item_code, attribute, value)
@@ -271,9 +297,9 @@ def price_change():
         return redirect(url_for('index'))
 
     item_code_list = ItemsOffered.query.all()
-    return render_template('price_change.html', form = form, items = item_code_list)
-
-
+    emp_id_list = Employees.query.all()
+    attribute_year = SalesPeriods.query.all()
+    return render_template('price_change.html', form = form, items = item_code_list, emps = emp_id_list, attr = attribute_year)
 
 if __name__ == "__main__":
     app.run(debug = True)

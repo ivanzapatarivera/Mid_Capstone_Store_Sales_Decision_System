@@ -36,7 +36,7 @@ class AddWarranty(FlaskForm):
     submit = SubmitField('Add')
 
 
-# Class to create Price Change form
+# ClassSales form
 class PriceChange(FlaskForm):
 
     item_code = StringField('Item Code: ')
@@ -44,3 +44,14 @@ class PriceChange(FlaskForm):
     value = IntegerField('New Price: ')
     submit = SubmitField('Add')
 
+
+# Class to create Sales form
+class Sales(FlaskForm):
+
+    index = IntegerField('Index ID: ')
+    item_code = StringField('Item Code: ')
+    emp_id = StringField('Employee ID: ')
+    attribute = StringField('Week of Year: ')
+    year = IntegerField('Year (####)')
+    value = IntegerField('Sales Value: ')
+    submit = SubmitField('Add')
