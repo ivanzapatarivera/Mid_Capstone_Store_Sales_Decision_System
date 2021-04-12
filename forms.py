@@ -20,5 +20,17 @@ class AddProduct(FlaskForm):
     url = StringField('URL (optional): ')
     link = StringField('Name for Link (optional): ')
     manufacturer = StringField('Manufacturer (optional): ')
+    price = IntegerField('Price: ')
     submit = SubmitField('Add')
 
+
+# Class to create Add Warranty form
+class AddWarranty(FlaskForm):
+
+    item_code = StringField('Item Code: ')
+    item_name = StringField('Item Name: ')
+    url = StringField('URL (optional): ')
+    link = StringField('Name for Link (optional): ')
+    manufacturer = StringField('Manufacturer (optional): ')
+    price = IntegerField('Price: ')
+    submit = SubmitField('Add')

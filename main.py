@@ -9,7 +9,7 @@ from sqlalchemy import *
 from sqlalchemy.dialects.mysql import *
 
 # Importing forms
-from forms import AddEmployee, AddProduct
+from forms import *
 
 # Creating app variable and configurations
 app = Flask(__name__)
@@ -217,9 +217,10 @@ def add_prod():
         item_name = form.item_name.data
         url = form.url.data
         link = form.link.data
-        manufacturer = form.manufacturer.data        
+        manufacturer = form.manufacturer.data  
+        price = form.price.data
 
-        added_product = ItemsOffered(item_code, item_name, url, link, manufacturer)
+        added_product = ItemsOffered(item_code, item_name, url, link, manufacturer, price)
         db.session.add(added_product)
         db.session.commit()
 
@@ -229,23 +230,27 @@ def add_prod():
 
 
 # Route to render add product form
-@app.route('/add_item', methods = ['GET', 'POST'])
-def add_item():
+@app.route('/add_warr', methods = ['GET', 'POST'])
+def add_warr():
 
-    form = AddProduct()
+    form = AddWarranty()
 
     if form.validate_on_submit():
 
         item_code = form.item_code.data
         item_name = form.item_name.data
+        url = form.url.data
+        link = form.link.data
+        manufacturer = form.manufacturer.data
+        price = form.price.data
 
-        added_product = ItemsOffered(item_code, item_name)
-        db.session.add(added_product)
+        added_warranty = ItemsOffered(item_code, item_name, url, link, manufacturer, price)
+        db.session.add(added_warranty)
         db.session.commit()
 
         return redirect(url_for('index'))
 
-    return render_template('add_prod.html', form = form)
+    return render_template('add_warr.html', form = form)
 
 if __name__ == "__main__":
     app.run(debug = True)
