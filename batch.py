@@ -29,7 +29,7 @@ df_emp.rename(columns= dict(zip(df_emp.columns, db_cols_emp))).to_sql(con = engi
 print(df_emp)
 
 # Exporting items offered dataframes to MySQL
-db_cols_items = ['item_code', 'item_name', 'url', 'link', 'manufacturer']
+db_cols_items = ['item_code', 'item_name', 'url', 'link', 'manufacturer', 'price']
 df_items_offered.rename(columns= dict(zip(df_items_offered.columns, db_cols_items))).to_sql(con = engine, name='items_offered', if_exists='append', index=False, index_label=None)
 print(df_items_offered)
 

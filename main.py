@@ -59,16 +59,18 @@ class ItemsOffered(db.Model):
     url = Column(Text, nullable=True)
     link = Column(Text, nullable=True)
     manufacturer = Column(VARCHAR(40), nullable=True)
+    price = Column(SMALLINT(10))
 
-    def __init__(self, item_code, item_name, url, link, manufacturer):
+    def __init__(self, item_code, item_name, url, link, manufacturer, price):
         self.item_code = item_code
         self.item_name = item_name
         self.url = url
         self.link = link
         self.manufacturer = manufacturer
+        self.price = price
 
     def __repr__(self):
-        return f'{self.item_code} \n {self.item_name} \n {self.url} \n {self.link} \n {self.manufacturer}'
+        return f'{self.item_code} \n {self.item_name} \n {self.url} \n {self.link} \n {self.manufacturer} {self.price}'
 
 
 class SalesPeriods(db.Model):
@@ -218,6 +220,26 @@ def add_prod():
         manufacturer = form.manufacturer.data        
 
         added_product = ItemsOffered(item_code, item_name, url, link, manufacturer)
+        db.session.add(added_product)
+        db.session.commit()
+
+        return redirect(url_for('index'))
+
+    return render_template('add_prod.html', form = form)
+
+
+# Route to render add product form
+@app.route('/add_item', methods = ['GET', 'POST'])
+def add_item():
+
+    form = AddProduct()
+
+    if form.validate_on_submit():
+
+        item_code = form.item_code.data
+        item_name = form.item_name.data
+
+        added_product = ItemsOffered(item_code, item_name)
         db.session.add(added_product)
         db.session.commit()
 
