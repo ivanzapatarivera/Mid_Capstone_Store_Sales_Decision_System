@@ -7,7 +7,7 @@ from config import db_uri
 engine = sql.create_engine(db_uri)
 
 # Importing and reading local .xlsx file with data from each sheet
-filename = 'data.xlsx'
+filename = 'data_old.xlsx'
 employees = pd.read_excel(filename, sheet_name = 'Employees')
 items_offered = pd.read_excel(filename, sheet_name = 'Items Offered')
 product_sales = pd.read_excel(filename, sheet_name = 'Product Sales')
