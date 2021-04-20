@@ -106,9 +106,9 @@ class ProductSales(db.Model):
     sale_id = Column(INTEGER(display_width=10), nullable=False, primary_key=True, autoincrement=True)
     index = Column(INTEGER(display_width=10), nullable=False)
     item_code = Column(VARCHAR(10), ForeignKey(
-        ItemsOffered.item_code, onupdate='CASCADE'))
+        ItemsOffered.item_code))
     emp_id = Column(VARCHAR(6), ForeignKey(
-        Employees.emp_id, onupdate='CASCADE'))
+        Employees.emp_id))
     attribute = Column(VARCHAR(6))
     year = Column(SMALLINT(4))
     value = Column(INTEGER(display_width=10), nullable=False)
